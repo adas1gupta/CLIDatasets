@@ -1,0 +1,8 @@
+pandas
+numpy
+click
+SQLAlchemy
+requests
+dask[dataframe]
+Flask
+Flask-Caching
