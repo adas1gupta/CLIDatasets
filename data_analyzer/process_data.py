@@ -1,41 +1,30 @@
 import dask.dataframe as daskDataframe
 
-# Global dataframe
 dataframe = None
 
 def load_data(source):
     global dataframe
-    try:
-        print(f"Loading data from {source}")
-        # Load data using Dask
-        dataframe = daskDataframe.read_csv(source)
-        print("Data loaded successfully")
-        print(dataframe.head())
-    except Exception as e:
-        raise Exception(f"Failed to load data: {str(e)}")
+    dataframe = daskDataframe.read_csv(source)
+    dataframe = dataframe.dropna()
+    print(f"Data loaded from {source}")
 
 def process_data():
     global dataframe
-    try:
-        if dataframe is None:
-            raise Exception("Dataframe is not loaded.")
-        
-        # Example data cleaning and analysis
-        dataframe = dataframe.dropna()  # Drop missing values
-        dataframe['mean_salary'] = dataframe['salary'].mean().compute()  # Compute and add a new column with the mean salary
+    if dataframe is not None:
+        dataframe['mean_salary'] = dataframe['salary'].mean().compute()
         print("Data processed successfully")
-        print(dataframe.head())
-    except Exception as e:
-        raise Exception(f"Failed to process data: {str(e)}")
+    else:
+        raise ValueError("Dataframe is not loaded")
 
 def save_data(output):
     global dataframe
-    try:
-        if dataframe is None:
-            raise Exception("Dataframe is not loaded.")
-        
-        # Compute and save the result
+    if dataframe is not None:
         dataframe.compute().to_csv(output, index=False)
-        print(f"Data saved successfully to {output}")
-    except Exception as e:
-        raise Exception(f"Failed to save data: {str(e)}")
+        print(f"Data saved to {output}")
+    else:
+        raise ValueError("Dataframe is not loaded")
+
+def process_file(source, output):
+    load_data(source)
+    process_data()
+    save_data(output)
