@@ -1,2 +1,5 @@
 *.db filter=lfs diff=lfs merge=lfs -text
 *.csv filter=lfs diff=lfs merge=lfs -text
+instance/data.db filter=lfs diff=lfs merge=lfs -text
+tests/processed_train.csv filter=lfs diff=lfs merge=lfs -text
+tests/train.csv filter=lfs diff=lfs merge=lfs -text
