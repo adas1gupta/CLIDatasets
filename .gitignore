@@ -1,3 +1,3 @@
-echo "instance/data.db" >> .gitignore
-echo "tests/processed_train.csv" >> .gitignore
-echo "tests/train.csv" >> .gitignore
+instance/data.db
+tests/processed_train.csv
+tests/train.csv
